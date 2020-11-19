@@ -3,13 +3,15 @@ import numpy as np
 
 def knapsack_basic(W, weights, value_unit) :
     value = 0
-    while W > 0 :
+    while W > 0 and len(weights) > 0:
         index = np.argmax(value_unit)
         weight = min(weights[index], W)
         value += value_unit[index] * weight
         W -= weight
-        weights = np.delete(weights, index)
-        value_unit = np.delete(value_unit, index)
+        weights[index] -= weight
+        if weights[index] == 0 :
+            weights = np.delete(weights, index)
+            value_unit = np.delete(value_unit, index)
 
     return np.round(value, 4)
 
